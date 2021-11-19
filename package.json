@@ -1,0 +1,45 @@
+{
+  "name": "@nodestrap/basic",
+  "version": "4.0.0",
+  "description": "A basic building block with standard stylesheet of nodestrap components.",
+  "type": "module",
+  "main": "dist/Basic.jsx",
+  "types": "dist/Basic.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodestrap/basic.git"
+  },
+  "keywords": [
+    "component",
+    "basic",
+    "generic",
+    "element",
+    "react",
+    "nodestrap",
+    "styled"
+  ],
+  "author": "heymarco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nodestrap/basic/issues"
+  },
+  "homepage": "https://github.com/nodestrap/basic#readme",
+  "dependencies": {
+    "@cssfn/css-config": "^1.0.1",
+    "@cssfn/css-types": "^1.0.2",
+    "@cssfn/css-var": "^1.0.2",
+    "@cssfn/cssfn": "^1.0.3",
+    "@cssfn/react-cssfn": "^1.0.3",
+    "@cssfn/types": "^1.0.3",
+    "@nodestrap/borders": "^4.0.1",
+    "@nodestrap/colors": "^4.0.1",
+    "@nodestrap/element": "^4.0.1",
+    "@nodestrap/spacers": "^4.0.1",
+    "@nodestrap/typos": "^4.0.0",
+    "@types/react": "^17.0.35",
+    "react": "^17.0.2"
+  }
+}
