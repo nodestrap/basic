@@ -459,7 +459,6 @@ export interface TogglerExcitedProps {
 }
 export declare const usesBasicLayout: () => StyleCollection;
 export declare const usesBasicVariants: () => StyleCollection;
-export declare const usesBasic: () => StyleCollection;
 export declare const useBasicSheet: import("@cssfn/types").Factory<import("jss").Classes<"main">>;
 export declare const cssProps: import("@cssfn/css-config").Refs<{
     foreg: string;

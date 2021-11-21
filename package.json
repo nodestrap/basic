@@ -1,6 +1,6 @@
 {
   "name": "@nodestrap/basic",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "A basic building block with standard stylesheet of nodestrap components.",
   "type": "module",
   "main": "dist/Basic.jsx",
