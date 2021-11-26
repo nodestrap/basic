@@ -1,9 +1,9 @@
 {
   "name": "@nodestrap/basic",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "A basic building block with standard stylesheet of nodestrap components.",
   "type": "module",
-  "main": "dist/Basic.jsx",
+  "main": "dist/Basic.js",
   "types": "dist/Basic.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -36,10 +36,10 @@
     "@cssfn/types": "^1.0.3",
     "@nodestrap/borders": "^4.0.1",
     "@nodestrap/colors": "^4.0.1",
-    "@nodestrap/element": "^4.0.1",
+    "@nodestrap/element": "^4.0.2",
     "@nodestrap/spacers": "^4.0.1",
     "@nodestrap/typos": "^4.0.0",
-    "@types/react": "^17.0.35",
+    "@types/react": "^17.0.37",
     "react": "^17.0.2"
   }
 }

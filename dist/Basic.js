@@ -860,16 +860,14 @@ export function Basic(props) {
     const outlinedVariant = useOutlinedVariant(props);
     const mildVariant = useMildVariant(props);
     // jsx:
-    return (<Element 
-    // other props:
-    {...props} 
-    // classes:
-    mainClass={props.mainClass ?? sheet.main} variantClasses={[...(props.variantClasses ?? []),
+    return (React.createElement(Element, { ...props, 
+        // classes:
+        mainClass: props.mainClass ?? sheet.main, variantClasses: [...(props.variantClasses ?? []),
             sizeVariant.class,
             themeVariant.class,
             gradientVariant.class,
             outlinedVariant.class,
             mildVariant.class,
-        ]}/>);
+        ] }));
 }
 export { Basic as default };
