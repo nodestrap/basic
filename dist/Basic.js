@@ -748,6 +748,7 @@ export const usesBasicVariants = () => {
         imports([
             // layouts:
             sizes(),
+            usesNudeVariant(),
             // colors:
             themes(),
             gradient(),
@@ -855,6 +856,7 @@ export function Basic(props) {
     const sheet = useBasicSheet();
     // variants:
     const sizeVariant = useSizeVariant(props);
+    const nudeVariant = useNudeVariant(props);
     const themeVariant = useThemeVariant(props);
     const gradientVariant = useGradientVariant(props);
     const outlinedVariant = useOutlinedVariant(props);
@@ -864,6 +866,7 @@ export function Basic(props) {
         // classes:
         mainClass: props.mainClass ?? sheet.main, variantClasses: [...(props.variantClasses ?? []),
             sizeVariant.class,
+            nudeVariant.class,
             themeVariant.class,
             gradientVariant.class,
             outlinedVariant.class,

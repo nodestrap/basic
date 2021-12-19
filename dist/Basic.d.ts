@@ -554,7 +554,7 @@ export declare const cssProps: import("@cssfn/css-config").Refs<{
     '@keyframes excited': PropEx.Keyframes;
     animExcited: (string | number | PropEx.Keyframes)[][];
 }>, cssConfig: import("@cssfn/css-config").CssConfigSettings;
-export interface BasicProps<TElement extends HTMLElement = HTMLElement> extends ElementProps<TElement>, SizeVariant, ThemeVariant, GradientVariant, OutlinedVariant, MildVariant {
+export interface BasicProps<TElement extends HTMLElement = HTMLElement> extends ElementProps<TElement>, SizeVariant, NudeVariant, ThemeVariant, GradientVariant, OutlinedVariant, MildVariant {
 }
 export declare function Basic<TElement extends HTMLElement = HTMLElement>(props: BasicProps<TElement>): JSX.Element;
 export { Basic as default };
