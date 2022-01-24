@@ -1,26 +1,26 @@
 import { default as React } from 'react';
 import type { Cust, PropEx } from '@cssfn/css-types';
-import { StyleCollection, SelectorCollection, PropList } from '@cssfn/cssfn';
+import { StyleCollection, SelectorCollection } from '@cssfn/cssfn';
 import { themes as colorThemes } from '@nodestrap/colors';
 import { ElementProps } from '@nodestrap/element';
 export declare type SizeName = 'sm' | 'lg' | (string & {});
 export interface SizeVars {
 }
-export declare const isSize: (sizeName: SizeName, styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
+export declare const isSize: (sizeName: SizeName, styles: StyleCollection) => import("@cssfn/cssfn").Rule;
 /**
  * Uses basic sizes.
  * For example: `sm`, `lg`.
  * @param factory Customize the callback to create sizing definitions for each size in `options`.
  * @param options Customize the size options.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents sizing definitions for each size in `options`.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents sizing definitions for each size in `options`.
  */
-export declare const usesSizeVariant: (factory?: (sizeName: SizeName) => StyleCollection, options?: SizeName[]) => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<SizeVars>, import("@cssfn/css-var").ReadonlyDecls<SizeVars>];
+export declare const usesSizeVariant: (factory?: (sizeName: SizeName) => StyleCollection, options?: SizeName[]) => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<SizeVars>, import("@cssfn/css-var").ReadonlyDecls<SizeVars>];
 /**
  * Creates sizing definitions for the given `sizeName`.
  * @param sizeName The given size name written in camel case.
- * @returns A `StyleCollection` represents sizing definitions for the given `sizeName`.
+ * @returns A `Rule` represents sizing definitions for the given `sizeName`.
  */
-export declare const sizeOf: (sizeName: SizeName) => StyleCollection;
+export declare const sizeOf: (sizeName: SizeName) => import("@cssfn/cssfn").Rule;
 /**
  * Gets the all available size options.
  * @returns A `SizeName[]` represents the all available size options.
@@ -41,16 +41,16 @@ export interface OrientationRuleOptions {
 export declare const defaultBlockOrientationRuleOptions: OrientationRuleOptions;
 export declare const defaultInlineOrientationRuleOptions: OrientationRuleOptions;
 export declare const normalizeOrientationRule: (options: OrientationRuleOptions | undefined, defaultOptions: OrientationRuleOptions) => Required<OrientationRuleOptions>;
-export declare const usesOrientationRule: (options?: OrientationRuleOptions | undefined) => readonly [false | (string & {}) | import("@cssfn/cssfn").UniversalSelector | import("@cssfn/cssfn").RealElementSelector | import("@cssfn/cssfn").PseudoElementSelector | (`.${string}` & {}) | (`:${string}` & {}) | import("@cssfn/cssfn").IdSelector | import("@cssfn/types").DeepArray<import("@cssfn/types").OptionalOrFalse<import("@cssfn/cssfn").Selector>> | null, false | (string & {}) | import("@cssfn/cssfn").UniversalSelector | import("@cssfn/cssfn").RealElementSelector | import("@cssfn/cssfn").PseudoElementSelector | (`.${string}` & {}) | (`:${string}` & {}) | import("@cssfn/cssfn").IdSelector | import("@cssfn/types").DeepArray<import("@cssfn/types").OptionalOrFalse<import("@cssfn/cssfn").Selector>> | null];
+export declare const usesOrientationRule: (options?: OrientationRuleOptions | undefined) => readonly [false | import("@cssfn/cssfn").Selector | import("@cssfn/types").DeepArray<import("@cssfn/types").OptionalOrFalse<import("@cssfn/cssfn").Selector>> | null, false | import("@cssfn/cssfn").Selector | import("@cssfn/types").DeepArray<import("@cssfn/types").OptionalOrFalse<import("@cssfn/cssfn").Selector>> | null];
 export interface OrientationVariant {
     orientation?: OrientationName;
 }
 export declare const useOrientationVariant: (props: OrientationVariant) => {
     class: OrientationName | null;
 };
-export declare const notNude: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
-export declare const isNude: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
-export declare const usesNudeVariant: () => StyleCollection;
+export declare const notNude: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
+export declare const isNude: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
+export declare const usesNudeVariant: () => import("@cssfn/cssfn").Rule;
 export interface NudeVariant {
     nude?: boolean;
 }
@@ -144,21 +144,21 @@ export interface ThemeVars {
      */
     focusImpt: any;
 }
-export declare const isTheme: (themeName: ThemeName, styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
+export declare const isTheme: (themeName: ThemeName, styles: StyleCollection) => import("@cssfn/cssfn").Rule;
 /**
  * Uses theme colors.
  * For example: `primary`, `secondary`, `danger`, `success`, etc.
  * @param factory Customize the callback to create color definitions for each color in `options`.
  * @param options Customize the color options.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents color definitions for each color in `options`.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents color definitions for each color in `options`.
  */
-export declare const usesThemeVariant: (factory?: (themeName: ThemeName) => StyleCollection, options?: ThemeName[]) => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<ThemeVars>, import("@cssfn/css-var").ReadonlyDecls<ThemeVars>];
+export declare const usesThemeVariant: (factory?: (themeName: ThemeName) => StyleCollection, options?: ThemeName[]) => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<ThemeVars>, import("@cssfn/css-var").ReadonlyDecls<ThemeVars>];
 /**
  * Creates color definitions for the given `themeName`.
  * @param themeName The given theme name written in camel case.
- * @returns A `StyleCollection` represents color definitions for the given `themeName`.
+ * @returns A `Rule` represents color definitions for the given `themeName`.
  */
-export declare const themeOf: (themeName: ThemeName) => StyleCollection;
+export declare const themeOf: (themeName: ThemeName) => import("@cssfn/cssfn").Rule;
 /**
  * Gets the all available theme options.
  * @returns A `ThemeName[]` represents the all available theme options.
@@ -167,21 +167,21 @@ export declare const themeOptions: () => ThemeName[];
 /**
  * Creates the default color definitions for unspecified `themeName`.
  * @param themeName The theme name as the default, written in camel case -or- `null`.
- * @returns A `StyleCollection` represents color definitions for the default `themeName`.
+ * @returns A `Rule` represents color definitions for the default `themeName`.
  */
-export declare const usesThemeDefault: (themeName?: ThemeName | null) => StyleCollection;
+export declare const usesThemeDefault: (themeName?: ThemeName | null) => import("@cssfn/cssfn").Rule;
 /**
  * Creates a conditional color definitions for the given `themeName`.
  * @param themeName The given theme name written in camel case -or- `null` to keep the current theme.
- * @returns A `StyleCollection` represents the conditional color definitions for the given `themeName`.
+ * @returns A `Rule` represents the conditional color definitions for the given `themeName`.
  */
-export declare const usesThemeCond: (themeName: ThemeName | null) => StyleCollection;
+export declare const usesThemeCond: (themeName: ThemeName | null) => import("@cssfn/cssfn").Rule;
 /**
  * Creates an important conditional color definitions for the given `themeName`.
  * @param themeName The given theme name written in camel case -or- `null` to keep the current theme.
- * @returns A `StyleCollection` represents the important conditional color definitions for the given `themeName`.
+ * @returns A `Rule` represents the important conditional color definitions for the given `themeName`.
  */
-export declare const usesThemeImpt: (themeName: ThemeName | null) => StyleCollection;
+export declare const usesThemeImpt: (themeName: ThemeName | null) => import("@cssfn/cssfn").Rule;
 export interface ThemeVariant {
     theme?: ThemeName;
 }
@@ -194,20 +194,20 @@ export interface GradientVars {
      */
     backgGradTg: any;
 }
-export declare const notGradient: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
-export declare const isGradient: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
+export declare const notGradient: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
+export declare const isGradient: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
 /**
  * Uses toggleable gradient.
  * @param factory Customize the callback to create gradient definitions for each toggle state.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents toggleable gradient definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents toggleable gradient definitions.
  */
-export declare const usesGradientVariant: (factory?: (toggle?: (boolean | null)) => StyleCollection) => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<GradientVars>, import("@cssfn/css-var").ReadonlyDecls<GradientVars>];
+export declare const usesGradientVariant: (factory?: (toggle?: boolean | null | undefined) => StyleCollection) => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<GradientVars>, import("@cssfn/css-var").ReadonlyDecls<GradientVars>];
 /**
  * Creates gradient definitions based on the given `toggle`.
  * @param toggle `true` to activate the gradient -or- `false` to deactivate -or- `null` to keep the original.
- * @returns A `StyleCollection` represents gradient definitions based on the given `toggle`.
+ * @returns A `Rule` represents gradient definitions based on the given `toggle`.
  */
-export declare const gradientOf: (toggle?: (boolean | null)) => StyleCollection;
+export declare const gradientOf: (toggle?: (boolean | null)) => import("@cssfn/cssfn").Rule;
 export interface GradientVariant {
     gradient?: boolean;
 }
@@ -232,20 +232,20 @@ export interface OutlinedVars {
      */
     backgTg: any;
 }
-export declare const notOutlined: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
-export declare const isOutlined: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
+export declare const notOutlined: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
+export declare const isOutlined: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
 /**
  * Uses toggleable outlining.
  * @param factory Customize the callback to create outlining definitions for each toggle state.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents toggleable outlining definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents toggleable outlining definitions.
  */
-export declare const usesOutlinedVariant: (factory?: (toggle?: (boolean | null)) => StyleCollection) => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<OutlinedVars>, import("@cssfn/css-var").ReadonlyDecls<OutlinedVars>];
+export declare const usesOutlinedVariant: (factory?: (toggle?: boolean | null | undefined) => StyleCollection) => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<OutlinedVars>, import("@cssfn/css-var").ReadonlyDecls<OutlinedVars>];
 /**
  * Creates outlining definitions based on the given `toggle`.
  * @param toggle `true` to activate the outlining -or- `false` to deactivate -or- `null` to keep the original.
- * @returns A `StyleCollection` represents outlining definitions based on the given `toggle`.
+ * @returns A `Rule` represents outlining definitions based on the given `toggle`.
  */
-export declare const outlinedOf: (toggle?: (boolean | null)) => StyleCollection;
+export declare const outlinedOf: (toggle?: (boolean | null)) => import("@cssfn/cssfn").Rule;
 export interface OutlinedVariant {
     outlined?: boolean;
 }
@@ -270,20 +270,20 @@ export interface MildVars {
      */
     backgTg: any;
 }
-export declare const notMild: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
-export declare const isMild: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
+export declare const notMild: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
+export declare const isMild: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
 /**
  * Uses toggleable mildification.
  * @param factory Customize the callback to create mildification definitions for each toggle state.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents toggleable mildification definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents toggleable mildification definitions.
  */
-export declare const usesMildVariant: (factory?: (toggle?: (boolean | null)) => StyleCollection) => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<MildVars>, import("@cssfn/css-var").ReadonlyDecls<MildVars>];
+export declare const usesMildVariant: (factory?: (toggle?: boolean | null | undefined) => StyleCollection) => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<MildVars>, import("@cssfn/css-var").ReadonlyDecls<MildVars>];
 /**
  * Creates mildification definitions based on the given `toggle`.
  * @param toggle `true` to activate the mildification -or- `false` to deactivate -or- `null` to keep the original.
- * @returns A `StyleCollection` represents mildification definitions based on the given `toggle`.
+ * @returns A `Rule` represents mildification definitions based on the given `toggle`.
  */
-export declare const mildOf: (toggle?: (boolean | null)) => StyleCollection;
+export declare const mildOf: (toggle?: (boolean | null)) => import("@cssfn/cssfn").Rule;
 export interface MildVariant {
     mild?: boolean;
 }
@@ -302,9 +302,9 @@ export interface ForegVars {
 }
 /**
  * Uses foreground color (text color).
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents foreground color definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents foreground color definitions.
  */
-export declare const usesForeg: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<ForegVars>, import("@cssfn/css-var").ReadonlyDecls<ForegVars>];
+export declare const usesForeg: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<ForegVars>, import("@cssfn/css-var").ReadonlyDecls<ForegVars>];
 export interface BackgVars {
     /**
      * none background.
@@ -325,9 +325,9 @@ export interface BackgVars {
 }
 /**
  * Uses background layer(s).
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents background layer(s) definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents background layer(s) definitions.
  */
-export declare const usesBackg: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<BackgVars>, import("@cssfn/css-var").ReadonlyDecls<BackgVars>];
+export declare const usesBackg: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<BackgVars>, import("@cssfn/css-var").ReadonlyDecls<BackgVars>];
 export interface BorderVars {
     /**
      * functional border color.
@@ -340,9 +340,9 @@ export interface BorderVars {
 }
 /**
  * Uses border color.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents border color definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents border color definitions.
  */
-export declare const usesBorder: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<BorderVars>, import("@cssfn/css-var").ReadonlyDecls<BorderVars>];
+export declare const usesBorder: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<BorderVars>, import("@cssfn/css-var").ReadonlyDecls<BorderVars>];
 export interface BorderStrokeVars {
     /**
      * final border mix (style, width, color, etc).
@@ -355,13 +355,13 @@ export interface BorderStrokeVars {
 }
 /**
  * Uses border stroke.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents border stroke definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents border stroke definitions.
  */
-export declare const usesBorderStroke: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<BorderStrokeVars>, import("@cssfn/css-var").ReadonlyDecls<BorderStrokeVars>];
+export declare const usesBorderStroke: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<BorderStrokeVars>, import("@cssfn/css-var").ReadonlyDecls<BorderStrokeVars>];
 export declare const expandBorderStroke: (cssProps?: {
     border: Cust.Ref;
     borderWidth: Cust.Ref;
-} | undefined) => PropList;
+} | undefined) => import("@cssfn/cssfn").Rule;
 export interface BorderRadiusVars {
     borderStartStartRadius: any;
     borderStartEndRadius: any;
@@ -370,25 +370,25 @@ export interface BorderRadiusVars {
 }
 /**
  * Uses border radius.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents border radius definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents border radius definitions.
  */
-export declare const usesBorderRadius: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<BorderRadiusVars>, import("@cssfn/css-var").ReadonlyDecls<BorderRadiusVars>];
+export declare const usesBorderRadius: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<BorderRadiusVars>, import("@cssfn/css-var").ReadonlyDecls<BorderRadiusVars>];
 export declare const expandBorderRadius: (cssProps?: {
     borderRadius: Cust.Ref;
-} | undefined) => PropList;
+} | undefined) => import("@cssfn/cssfn").Rule;
 export interface PaddingVars {
     paddingInline: any;
     paddingBlock: any;
 }
 /**
  * Uses paddings.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents paddings definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents paddings definitions.
  */
-export declare const usesPadding: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<PaddingVars>, import("@cssfn/css-var").ReadonlyDecls<PaddingVars>];
+export declare const usesPadding: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<PaddingVars>, import("@cssfn/css-var").ReadonlyDecls<PaddingVars>];
 export declare const expandPadding: (cssProps?: {
     paddingInline: Cust.Ref;
     paddingBlock: Cust.Ref;
-} | undefined) => PropList;
+} | undefined) => import("@cssfn/cssfn").Rule;
 export interface AnimVars {
     /**
      * none boxShadow.
@@ -420,34 +420,34 @@ export interface AnimVars {
     anim: any;
 }
 export declare const convertRefToDecl: (ref: Cust.Ref) => Cust.Decl;
-export declare const usesAnim: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<AnimVars>, import("@cssfn/css-var").ReadonlyDecls<AnimVars>, {
-    readonly boxShadows: () => (string | number)[];
-    readonly registerBoxShadow: (item: Cust.Ref) => Set<string | number>;
+export declare const usesAnim: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<AnimVars>, import("@cssfn/css-var").ReadonlyDecls<AnimVars>, {
+    readonly boxShadows: () => (Cust.Ref | Cust.General)[];
+    readonly registerBoxShadow: (item: Cust.Ref) => Set<Cust.Ref | Cust.General>;
     readonly unregisterBoxShadow: (item: Cust.Ref) => boolean;
-    readonly filters: () => (string | number)[];
-    readonly registerFilter: (item: Cust.Ref) => Set<string | number>;
+    readonly filters: () => (Cust.Ref | Cust.General)[];
+    readonly registerFilter: (item: Cust.Ref) => Set<Cust.Ref | Cust.General>;
     readonly unregisterFilter: (item: Cust.Ref) => boolean;
-    readonly anims: () => (string | number)[];
-    readonly registerAnim: (item: Cust.Ref) => Set<string | number>;
+    readonly anims: () => (Cust.Ref | Cust.General)[];
+    readonly registerAnim: (item: Cust.Ref) => Set<Cust.Ref | Cust.General>;
     readonly unregisterAnim: (item: Cust.Ref) => boolean;
 }];
 export declare const isRef: (expr: Cust.Expr) => expr is Cust.Ref;
 export declare const filterRef: (expr: Cust.Ref | Cust.General) => expr is Cust.Ref;
-export declare const fallbackNoneBoxShadow: (boxShadow: Cust.Ref | Cust.General) => string | number;
-export declare const fallbackNoneFilter: (filter: Cust.Ref | Cust.General) => string | number;
-export declare const fallbackNoneTransf: (transf: Cust.Ref | Cust.General) => string | number;
-export declare const fallbackNoneAnim: (anim: Cust.Ref | Cust.General) => string | number;
+export declare const fallbackNoneBoxShadow: (boxShadow: Cust.Ref | Cust.General) => (string & {}) | (number & {});
+export declare const fallbackNoneFilter: (filter: Cust.Ref | Cust.General) => (string & {}) | (number & {});
+export declare const fallbackNoneTransf: (transf: Cust.Ref | Cust.General) => (string & {}) | (number & {});
+export declare const fallbackNoneAnim: (anim: Cust.Ref | Cust.General) => (string & {}) | (number & {});
 export interface ExcitedVars {
     filter: any;
     anim: any;
 }
-export declare const isExcited: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
-export declare const notExcited: (styles: StyleCollection) => import("@cssfn/cssfn").RuleEntry;
+export declare const isExcited: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
+export declare const notExcited: (styles: StyleCollection) => import("@cssfn/cssfn").Rule;
 /**
  * Uses excited states.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents excited state definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents excited state definitions.
  */
-export declare const usesExcitedState: () => readonly [() => StyleCollection, import("@cssfn/css-var").ReadonlyRefs<ExcitedVars>, import("@cssfn/css-var").ReadonlyDecls<ExcitedVars>];
+export declare const usesExcitedState: () => readonly [() => import("@cssfn/cssfn").Rule, import("@cssfn/css-var").ReadonlyRefs<ExcitedVars>, import("@cssfn/css-var").ReadonlyDecls<ExcitedVars>];
 export declare const useExcitedState: (props: TogglerExcitedProps) => {
     excited: boolean;
     class: string | null;
@@ -457,8 +457,8 @@ export interface TogglerExcitedProps {
     excited?: boolean;
     onExcitedChange?: (newExcited: boolean) => void;
 }
-export declare const usesBasicLayout: () => StyleCollection;
-export declare const usesBasicVariants: () => StyleCollection;
+export declare const usesBasicLayout: () => import("@cssfn/cssfn").Rule;
+export declare const usesBasicVariants: () => import("@cssfn/cssfn").Rule;
 export declare const useBasicSheet: import("@cssfn/types").Factory<import("jss").Classes<"main">>;
 export declare const cssProps: import("@cssfn/css-config").Refs<{
     foreg: string;

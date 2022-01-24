@@ -2,11 +2,11 @@
 import { default as React, useState, } from 'react'; // base technology of our nodestrap components
 import { 
 // compositions:
-composition, mainComposition, imports, 
-// layouts:
-layout, vars, 
+mainComposition, 
+// styles:
+style, vars, imports, 
 // rules:
-variants, states, rule, 
+rule, variants, states, 
 // utilities:
 solidBackg, pascalCase, } from '@cssfn/cssfn'; // cssfn core
 import { 
@@ -30,15 +30,15 @@ export const isSize = (sizeName, styles) => rule(`.sz${pascalCase(sizeName)}`, s
  * For example: `sm`, `lg`.
  * @param factory Customize the callback to create sizing definitions for each size in `options`.
  * @param options Customize the size options.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents sizing definitions for each size in `options`.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents sizing definitions for each size in `options`.
  */
 export const usesSizeVariant = (factory = sizeOf, options = sizeOptions()) => {
     return [
-        () => composition([
-            variants([
+        () => style({
+            ...variants([
                 options.map((sizeName) => isSize(sizeName, factory(sizeName))),
             ]),
-        ]),
+        }),
         sizeRefs,
         sizeDecls,
     ];
@@ -46,14 +46,12 @@ export const usesSizeVariant = (factory = sizeOf, options = sizeOptions()) => {
 /**
  * Creates sizing definitions for the given `sizeName`.
  * @param sizeName The given size name written in camel case.
- * @returns A `StyleCollection` represents sizing definitions for the given `sizeName`.
+ * @returns A `Rule` represents sizing definitions for the given `sizeName`.
  */
-export const sizeOf = (sizeName) => composition([
-    layout({
-        // overwrites propName = propName{SizeName}:
-        ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, sizeName)),
-    }),
-]);
+export const sizeOf = (sizeName) => style({
+    // overwrites propName = propName{SizeName}:
+    ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, sizeName)),
+});
 /**
  * Gets the all available size options.
  * @returns A `SizeName[]` represents the all available size options.
@@ -102,27 +100,25 @@ export const usesNudeVariant = () => {
     // const [, , borderRadiusDecls] = usesBorderRadius();
     // spacings:
     const [, , paddingDecls] = usesPadding();
-    return composition([
-        variants([
-            isNude([
-                layout({
-                    // backgrounds:
-                    backg: 'none !important',
-                    // borders:
-                    [borderStrokeDecls.borderWidth]: '0px',
-                    // // remove rounded corners on top:
-                    // [borderRadiusDecls.borderStartStartRadius] : '0px', // do not discard borderRadius, causing boxShadow looks weird
-                    // [borderRadiusDecls.borderStartEndRadius  ] : '0px', // do not discard borderRadius, causing boxShadow looks weird
-                    // // remove rounded corners on bottom:
-                    // [borderRadiusDecls.borderEndStartRadius  ] : '0px', // do not discard borderRadius, causing boxShadow looks weird
-                    // [borderRadiusDecls.borderEndEndRadius    ] : '0px', // do not discard borderRadius, causing boxShadow looks weird
-                    // spacings:
-                    [paddingDecls.paddingInline]: '0px',
-                    [paddingDecls.paddingBlock]: '0px', // discard padding
-                }),
-            ]),
+    return style({
+        ...variants([
+            isNude({
+                // backgrounds:
+                backg: 'none !important',
+                // borders:
+                [borderStrokeDecls.borderWidth]: '0px',
+                // // remove rounded corners on top:
+                // [borderRadiusDecls.borderStartStartRadius] : '0px', // do not discard borderRadius, causing boxShadow looks weird
+                // [borderRadiusDecls.borderStartEndRadius  ] : '0px', // do not discard borderRadius, causing boxShadow looks weird
+                // // remove rounded corners on bottom:
+                // [borderRadiusDecls.borderEndStartRadius  ] : '0px', // do not discard borderRadius, causing boxShadow looks weird
+                // [borderRadiusDecls.borderEndEndRadius    ] : '0px', // do not discard borderRadius, causing boxShadow looks weird
+                // spacings:
+                [paddingDecls.paddingInline]: '0px',
+                [paddingDecls.paddingBlock]: '0px', // discard padding
+            }),
         ]),
-    ]);
+    });
 };
 export const useNudeVariant = (props) => {
     return {
@@ -136,15 +132,15 @@ export const isTheme = (themeName, styles) => rule(`.th${pascalCase(themeName)}`
  * For example: `primary`, `secondary`, `danger`, `success`, etc.
  * @param factory Customize the callback to create color definitions for each color in `options`.
  * @param options Customize the color options.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents color definitions for each color in `options`.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents color definitions for each color in `options`.
  */
 export const usesThemeVariant = (factory = themeOf, options = themeOptions()) => {
     return [
-        () => composition([
-            variants([
+        () => style({
+            ...variants([
                 options.map((themeName) => isTheme(themeName, factory(themeName))),
             ]),
-        ]),
+        }),
         themeRefs,
         themeDecls,
     ];
@@ -152,10 +148,10 @@ export const usesThemeVariant = (factory = themeOf, options = themeOptions()) =>
 /**
  * Creates color definitions for the given `themeName`.
  * @param themeName The given theme name written in camel case.
- * @returns A `StyleCollection` represents color definitions for the given `themeName`.
+ * @returns A `Rule` represents color definitions for the given `themeName`.
  */
-export const themeOf = (themeName) => composition([
-    vars({
+export const themeOf = (themeName) => style({
+    ...vars({
         [themeDecls.foreg]: colors[`${themeName}Text`],
         [themeDecls.backg]: colors[themeName],
         [themeDecls.border]: colors[`${themeName}Bold`],
@@ -164,7 +160,7 @@ export const themeOf = (themeName) => composition([
         [themeDecls.backgMild]: colors[`${themeName}Mild`],
         [themeDecls.focus]: colors[`${themeName}Thin`], // 50% transparency of base color
     }),
-]);
+});
 /**
  * Gets the all available theme options.
  * @returns A `ThemeName[]` represents the all available theme options.
@@ -173,7 +169,7 @@ export const themeOptions = () => Object.keys(colorThemes);
 /**
  * Creates the default color definitions for unspecified `themeName`.
  * @param themeName The theme name as the default, written in camel case -or- `null`.
- * @returns A `StyleCollection` represents color definitions for the default `themeName`.
+ * @returns A `Rule` represents color definitions for the default `themeName`.
  */
 export const usesThemeDefault = (themeName = null) => {
     return usesThemeCond(themeName);
@@ -181,10 +177,10 @@ export const usesThemeDefault = (themeName = null) => {
 /**
  * Creates a conditional color definitions for the given `themeName`.
  * @param themeName The given theme name written in camel case -or- `null` to keep the current theme.
- * @returns A `StyleCollection` represents the conditional color definitions for the given `themeName`.
+ * @returns A `Rule` represents the conditional color definitions for the given `themeName`.
  */
-export const usesThemeCond = (themeName) => composition([
-    vars({
+export const usesThemeCond = (themeName) => style({
+    ...vars({
         [themeDecls.foregCond]: !themeName ? null : colors[`${themeName}Text`],
         [themeDecls.backgCond]: !themeName ? null : colors[themeName],
         [themeDecls.borderCond]: !themeName ? null : colors[`${themeName}Bold`],
@@ -193,14 +189,14 @@ export const usesThemeCond = (themeName) => composition([
         [themeDecls.backgMildCond]: !themeName ? null : colors[`${themeName}Mild`],
         [themeDecls.focusCond]: !themeName ? null : colors[`${themeName}Thin`], // 50% transparency of base color
     }),
-]);
+});
 /**
  * Creates an important conditional color definitions for the given `themeName`.
  * @param themeName The given theme name written in camel case -or- `null` to keep the current theme.
- * @returns A `StyleCollection` represents the important conditional color definitions for the given `themeName`.
+ * @returns A `Rule` represents the important conditional color definitions for the given `themeName`.
  */
-export const usesThemeImpt = (themeName) => composition([
-    vars({
+export const usesThemeImpt = (themeName) => style({
+    ...vars({
         [themeDecls.foregImpt]: !themeName ? null : colors[`${themeName}Text`],
         [themeDecls.backgImpt]: !themeName ? null : colors[themeName],
         [themeDecls.borderImpt]: !themeName ? null : colors[`${themeName}Bold`],
@@ -209,7 +205,7 @@ export const usesThemeImpt = (themeName) => composition([
         [themeDecls.backgMildImpt]: !themeName ? null : colors[`${themeName}Mild`],
         [themeDecls.focusImpt]: !themeName ? null : colors[`${themeName}Thin`], // 50% transparency of base color
     }),
-]);
+});
 export const useThemeVariant = (props, themeDefault) => {
     const themeName = props.theme ?? themeDefault;
     return {
@@ -224,16 +220,16 @@ export const isGradient = (styles) => rule(['.gradient &', '.gradient&', '&.grad
 /**
  * Uses toggleable gradient.
  * @param factory Customize the callback to create gradient definitions for each toggle state.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents toggleable gradient definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents toggleable gradient definitions.
  */
 export const usesGradientVariant = (factory = gradientOf) => {
     return [
-        () => composition([
-            variants([
+        () => style({
+            ...variants([
                 notGradient(factory(false)),
                 isGradient(factory(true)),
             ]),
-        ]),
+        }),
         gradientRefs,
         gradientDecls,
     ];
@@ -241,14 +237,14 @@ export const usesGradientVariant = (factory = gradientOf) => {
 /**
  * Creates gradient definitions based on the given `toggle`.
  * @param toggle `true` to activate the gradient -or- `false` to deactivate -or- `null` to keep the original.
- * @returns A `StyleCollection` represents gradient definitions based on the given `toggle`.
+ * @returns A `Rule` represents gradient definitions based on the given `toggle`.
  */
-export const gradientOf = (toggle = true) => composition([
-    vars({
+export const gradientOf = (toggle = true) => style({
+    ...vars({
         // *toggle on/off* the background gradient prop:
         [gradientDecls.backgGradTg]: toggle ? cssProps.backgGrad : ((toggle !== null) ? 'initial' : null),
     }),
-]);
+});
 export const useGradientVariant = (props) => {
     return {
         class: props.gradient ? 'gradient' : null,
@@ -262,30 +258,30 @@ export const isOutlined = (styles) => rule(['.outlined &', '.outlined&', '&.outl
 /**
  * Uses toggleable outlining.
  * @param factory Customize the callback to create outlining definitions for each toggle state.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents toggleable outlining definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents toggleable outlining definitions.
  */
 export const usesOutlinedVariant = (factory = outlinedOf) => {
     // dependencies:
     const [themes, themeRefs] = usesThemeVariant();
     return [
-        () => composition([
-            imports([
+        () => style({
+            ...imports([
                 // `usesOutlinedVariant()` implicitly `usesThemeVariant()`
                 // `usesOutlinedVariant()` requires `usesThemeVariant()` to work correctly, otherwise it uses the parent themes (that's not intented)
                 themes(),
             ]),
-            vars({
+            ...vars({
                 [outlinedDecls.foregFn]: fallbacks(themeRefs.foregOutlinedImpt, // first  priority
                 themeRefs.foregOutlined, // second priority
                 themeRefs.foregOutlinedCond, // third  priority
                 cssProps.foreg),
                 [outlinedDecls.backgFn]: 'transparent', // set background to transparent, regardless of the theme colors
             }),
-            variants([
+            ...variants([
                 notOutlined(factory(false)),
                 isOutlined(factory(true)),
             ]),
-        ]),
+        }),
         outlinedRefs,
         outlinedDecls,
     ];
@@ -293,15 +289,15 @@ export const usesOutlinedVariant = (factory = outlinedOf) => {
 /**
  * Creates outlining definitions based on the given `toggle`.
  * @param toggle `true` to activate the outlining -or- `false` to deactivate -or- `null` to keep the original.
- * @returns A `StyleCollection` represents outlining definitions based on the given `toggle`.
+ * @returns A `Rule` represents outlining definitions based on the given `toggle`.
  */
-export const outlinedOf = (toggle = true) => composition([
-    vars({
+export const outlinedOf = (toggle = true) => style({
+    ...vars({
         // *toggle on/off* the outlined props:
         [outlinedDecls.foregTg]: toggle ? outlinedRefs.foregFn : ((toggle !== null) ? 'initial' : null),
         [outlinedDecls.backgTg]: toggle ? outlinedRefs.backgFn : ((toggle !== null) ? 'initial' : null),
     }),
-]);
+});
 export const useOutlinedVariant = (props) => {
     return {
         class: props.outlined ? 'outlined' : null,
@@ -316,19 +312,19 @@ export const isMild = (styles) => rule(['.mild&', '&.mild'], styles);
 /**
  * Uses toggleable mildification.
  * @param factory Customize the callback to create mildification definitions for each toggle state.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents toggleable mildification definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents toggleable mildification definitions.
  */
 export const usesMildVariant = (factory = mildOf) => {
     // dependencies:
     const [themes, themeRefs] = usesThemeVariant();
     return [
-        () => composition([
-            imports([
+        () => style({
+            ...imports([
                 // `usesMildVariant()` implicitly `usesThemeVariant()`
                 // `usesMildVariant()` requires `usesThemeVariant()` to work correctly, otherwise it uses the parent themes (that's not intented)
                 themes(),
             ]),
-            vars({
+            ...vars({
                 [mildDecls.foregFn]: fallbacks(themeRefs.foregMildImpt, // first  priority
                 themeRefs.foregMild, // second priority
                 themeRefs.foregMildCond, // third  priority
@@ -338,11 +334,11 @@ export const usesMildVariant = (factory = mildOf) => {
                 themeRefs.backgMildCond, // third  priority
                 cssProps.backg),
             }),
-            variants([
+            ...variants([
                 notMild(factory(false)),
                 isMild(factory(true)),
             ]),
-        ]),
+        }),
         mildRefs,
         mildDecls,
     ];
@@ -350,15 +346,15 @@ export const usesMildVariant = (factory = mildOf) => {
 /**
  * Creates mildification definitions based on the given `toggle`.
  * @param toggle `true` to activate the mildification -or- `false` to deactivate -or- `null` to keep the original.
- * @returns A `StyleCollection` represents mildification definitions based on the given `toggle`.
+ * @returns A `Rule` represents mildification definitions based on the given `toggle`.
  */
-export const mildOf = (toggle = true) => composition([
-    vars({
+export const mildOf = (toggle = true) => style({
+    ...vars({
         // *toggle on/off* the mildification props:
         [mildDecls.foregTg]: toggle ? mildRefs.foregFn : ((toggle !== null) ? 'initial' : null),
         [mildDecls.backgTg]: toggle ? mildRefs.backgFn : ((toggle !== null) ? 'initial' : null),
     }),
-]);
+});
 export const useMildVariant = (props) => {
     return {
         class: props.mild ? 'mild' : null,
@@ -367,7 +363,7 @@ export const useMildVariant = (props) => {
 const [foregRefs, foregDecls] = createCssVar();
 /**
  * Uses foreground color (text color).
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents foreground color definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents foreground color definitions.
  */
 export const usesForeg = () => {
     // dependencies:
@@ -375,8 +371,8 @@ export const usesForeg = () => {
     const [, outlinedRefs] = usesOutlinedVariant();
     const [, mildRefs] = usesMildVariant();
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [foregDecls.foregFn]: fallbacks(themeRefs.foregImpt, // first  priority
                 themeRefs.foreg, // second priority
                 themeRefs.foregCond, // third  priority
@@ -385,7 +381,7 @@ export const usesForeg = () => {
                 mildRefs.foregTg, // toggle mild     (if `usesMildVariant()` applied)
                 foregRefs.foregFn),
             }),
-        ]),
+        }),
         foregRefs,
         foregDecls,
     ];
@@ -393,7 +389,7 @@ export const usesForeg = () => {
 const [backgRefs, backgDecls] = createCssVar();
 /**
  * Uses background layer(s).
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents background layer(s) definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents background layer(s) definitions.
  */
 export const usesBackg = () => {
     // dependencies:
@@ -402,8 +398,8 @@ export const usesBackg = () => {
     const [, outlinedRefs] = usesOutlinedVariant();
     const [, mildRefs] = usesMildVariant();
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [backgDecls.backgNone]: solidBackg('transparent'),
                 [backgDecls.backgFn]: fallbacks(themeRefs.backgImpt, // first  priority
                 themeRefs.backg, // second priority
@@ -421,7 +417,7 @@ export const usesBackg = () => {
                     backgRefs.backgCol,
                 ],
             }),
-        ]),
+        }),
         backgRefs,
         backgDecls,
     ];
@@ -429,15 +425,15 @@ export const usesBackg = () => {
 const [borderRefs, borderDecls] = createCssVar();
 /**
  * Uses border color.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents border color definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents border color definitions.
  */
 export const usesBorder = () => {
     // dependencies:
     const [, themeRefs] = usesThemeVariant();
     const [, outlinedRefs] = usesOutlinedVariant();
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [borderDecls.borderFn]: fallbacks(themeRefs.borderImpt, // first  priority
                 themeRefs.border, // second priority
                 themeRefs.borderCond, // third  priority
@@ -445,7 +441,7 @@ export const usesBorder = () => {
                 [borderDecls.borderCol]: fallbacks(outlinedRefs.foregTg, // toggle outlined (if `usesOutlinedVariant()` applied)
                 borderRefs.borderFn),
             }),
-        ]),
+        }),
         borderRefs,
         borderDecls,
     ];
@@ -453,16 +449,16 @@ export const usesBorder = () => {
 const [borderStrokeRefs, borderStrokeDecls] = createCssVar();
 /**
  * Uses border stroke.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents border stroke definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents border stroke definitions.
  */
 export const usesBorderStroke = () => {
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [borderStrokeDecls.border]: cssProps.border,
                 [borderStrokeDecls.borderWidth]: cssProps.borderWidth, // default => uses config's border width
             }),
-        ]),
+        }),
         borderStrokeRefs,
         borderStrokeDecls,
     ];
@@ -473,13 +469,13 @@ export const expandBorderStroke = (cssProps) => {
     const [, borderRefs] = usesBorder();
     // borders:
     const [, borderStrokeRefs, borderStrokeDecls] = usesBorderStroke();
-    return vars({
+    return style({
         // borders:
         // cssProps.borderStroke** => ref.borderStroke**
-        ...(cssProps ? {
+        ...(cssProps ? vars({
             [borderStrokeDecls.border]: cssProps.border,
             [borderStrokeDecls.borderWidth]: cssProps.borderWidth,
-        } : null),
+        }) : vars({})),
         border: borderStrokeRefs.border,
         borderColor: borderRefs.borderCol,
         borderWidth: borderStrokeRefs.borderWidth, // overwrite width prop
@@ -488,18 +484,18 @@ export const expandBorderStroke = (cssProps) => {
 const [borderRadiusRefs, borderRadiusDecls] = createCssVar();
 /**
  * Uses border radius.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents border radius definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents border radius definitions.
  */
 export const usesBorderRadius = () => {
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [borderRadiusDecls.borderStartStartRadius]: cssProps.borderRadius,
                 [borderRadiusDecls.borderStartEndRadius]: cssProps.borderRadius,
                 [borderRadiusDecls.borderEndStartRadius]: cssProps.borderRadius,
                 [borderRadiusDecls.borderEndEndRadius]: cssProps.borderRadius, // default => uses config's border radius
             }),
-        ]),
+        }),
         borderRadiusRefs,
         borderRadiusDecls,
     ];
@@ -508,15 +504,15 @@ export const expandBorderRadius = (cssProps) => {
     // dependencies:
     // borders:
     const [, borderRadiusRefs, borderRadiusDecls] = usesBorderRadius();
-    return vars({
+    return style({
         // borders:
         // cssProps.borderRadius** => ref.borderRadius**
-        ...(cssProps ? {
+        ...(cssProps ? vars({
             [borderRadiusDecls.borderStartStartRadius]: cssProps.borderRadius,
             [borderRadiusDecls.borderStartEndRadius]: cssProps.borderRadius,
             [borderRadiusDecls.borderEndStartRadius]: cssProps.borderRadius,
             [borderRadiusDecls.borderEndEndRadius]: cssProps.borderRadius,
-        } : null),
+        }) : vars({})),
         borderRadius: undefined,
         borderStartStartRadius: borderRadiusRefs.borderStartStartRadius,
         borderStartEndRadius: borderRadiusRefs.borderStartEndRadius,
@@ -527,16 +523,16 @@ export const expandBorderRadius = (cssProps) => {
 const [paddingRefs, paddingDecls] = createCssVar();
 /**
  * Uses paddings.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents paddings definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents paddings definitions.
  */
 export const usesPadding = () => {
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [paddingDecls.paddingInline]: cssProps.paddingInline,
                 [paddingDecls.paddingBlock]: cssProps.paddingBlock, // default => uses config's padding block
             }),
-        ]),
+        }),
         paddingRefs,
         paddingDecls,
     ];
@@ -545,13 +541,13 @@ export const expandPadding = (cssProps) => {
     // dependencies:
     // spacings:
     const [, paddingRefs, paddingDecls] = usesPadding();
-    return vars({
+    return style({
         // spacings:
         // cssProps.padding** => ref.padding**
-        ...(cssProps ? {
+        ...(cssProps ? vars({
             [paddingDecls.paddingInline]: cssProps.paddingInline,
             [paddingDecls.paddingBlock]: cssProps.paddingBlock,
-        } : null),
+        }) : vars({})),
         padding: undefined,
         paddingInline: paddingRefs.paddingInline,
         paddingBlock: paddingRefs.paddingBlock, // overwrite padding prop
@@ -575,8 +571,8 @@ const propsManager = {
 export const convertRefToDecl = (ref) => (ref.match(/(?<=var\(\s*)--[\w-]+(?=\s*(?:,[^)]*)?\))/)?.[0] ?? null);
 export const usesAnim = () => {
     return [
-        () => composition([
-            vars({
+        () => style({
+            ...vars({
                 [animDecls.boxShadowNone]: [[0, 0, 'transparent']],
                 [animDecls.boxShadow]: [
                     // layering: boxShadow1 | boxShadow2 | boxShadow3 ...
@@ -597,12 +593,12 @@ export const usesAnim = () => {
                     ...propsManager.anims().map(fallbackNoneAnim),
                 ],
             }),
-            vars(Object.fromEntries([
+            ...vars(Object.fromEntries([
                 ...propsManager.boxShadows().filter(filterRef).map(convertRefToDecl).map((decl) => [decl, animRefs.boxShadowNone]),
                 ...propsManager.filters().filter(filterRef).map(convertRefToDecl).map((decl) => [decl, animRefs.filterNone]),
                 ...propsManager.anims().filter(filterRef).map(convertRefToDecl).map((decl) => [decl, animRefs.animNone]),
             ])),
-        ]),
+        }),
         animRefs,
         animDecls,
         propsManager,
@@ -626,20 +622,18 @@ export const isExcited = (styles) => rule(selectorIsExcited, styles);
 export const notExcited = (styles) => rule(selectorNotExcited, styles);
 /**
  * Uses excited states.
- * @returns A `[Factory<StyleCollection>, ReadonlyRefs, ReadonlyDecls]` represents excited state definitions.
+ * @returns A `[Factory<Rule>, ReadonlyRefs, ReadonlyDecls]` represents excited state definitions.
  */
 export const usesExcitedState = () => {
     return [
-        () => composition([
-            states([
-                isExcited([
-                    vars({
-                        [excitedDecls.filter]: cssProps.filterExcited,
-                        [excitedDecls.anim]: cssProps.animExcited,
-                    }),
-                ]),
+        () => style({
+            ...states([
+                isExcited(vars({
+                    [excitedDecls.filter]: cssProps.filterExcited,
+                    [excitedDecls.anim]: cssProps.animExcited,
+                })),
             ]),
-        ]),
+        }),
         excitedRefs,
         excitedDecls,
     ];
@@ -699,8 +693,8 @@ export const usesBasicLayout = () => {
     const [padding] = usesPadding();
     // animations:
     const [anim, animRefs] = usesAnim();
-    return composition([
-        imports([
+    return style({
+        ...imports([
             // colors:
             usesThemeDefault(),
             foreg(),
@@ -714,7 +708,7 @@ export const usesBasicLayout = () => {
             // animations:
             anim(),
         ]),
-        layout({
+        ...style({
             // layouts:
             display: 'block',
             // customize:
@@ -733,7 +727,7 @@ export const usesBasicLayout = () => {
             filter: animRefs.filter,
             anim: animRefs.anim,
         }),
-    ]);
+    });
 };
 export const usesBasicVariants = () => {
     // dependencies:
@@ -744,8 +738,8 @@ export const usesBasicVariants = () => {
     const [gradient] = usesGradientVariant();
     const [outlined] = usesOutlinedVariant();
     const [mild] = usesMildVariant();
-    return composition([
-        imports([
+    return style({
+        ...imports([
             // layouts:
             sizes(),
             usesNudeVariant(),
@@ -755,17 +749,15 @@ export const usesBasicVariants = () => {
             outlined(),
             mild(),
         ]),
-    ]);
+    });
 };
 export const useBasicSheet = createUseSheet(() => [
-    mainComposition([
-        imports([
-            // layouts:
-            usesBasicLayout(),
-            // variants:
-            usesBasicVariants(),
-        ]),
-    ]),
+    mainComposition(imports([
+        // layouts:
+        usesBasicLayout(),
+        // variants:
+        usesBasicVariants(),
+    ])),
 ], /*sheetId :*/ 'rbkpy0qh2b'); // an unique salt for SSR support, ensures the server-side & client-side have the same generated class names
 // configs:
 export const [cssProps, cssDecls, cssVals, cssConfig] = createCssConfig(() => {
